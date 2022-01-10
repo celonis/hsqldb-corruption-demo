@@ -7,8 +7,9 @@ repositories {
 }
 
 dependencies {
+    implementation("org.hsqldb:hsqldb:2.6.1:debug")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 
 }
 
