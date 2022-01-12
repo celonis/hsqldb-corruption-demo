@@ -14,8 +14,6 @@ public class DatabaseConfigurator {
     private final String dialect;
     private final String username;
     private final String password;
-    private final String encryptedPassword;
-    private final String schema;
     private final int minPoolSize;
     private final int maxPoolSize;
     private final int maxIdle;
@@ -27,8 +25,6 @@ public class DatabaseConfigurator {
         @Value("${database.dialect:}") String dialect,
         @Value("${database.username:}") String username,
         @Value("${database.password:}") String password,
-        @Value("${database.encryptedPassword:}") String encryptedPassword,
-        @Value("${database.schema:}") String schema,
         @Value("${database.minPoolSize:3}") int minPoolSize,
         @Value("${database.maxPoolSize:100}") int maxPoolSize,
         @Value("${database.maxIdle:300}") int maxIdle,
@@ -38,8 +34,6 @@ public class DatabaseConfigurator {
         this.dialect = dialect;
         this.username = username;
         this.password = password;
-        this.encryptedPassword = encryptedPassword;
-        this.schema = schema;
         this.minPoolSize = minPoolSize;
         this.maxPoolSize = maxPoolSize;
         this.maxIdle = maxIdle;
@@ -84,7 +78,6 @@ public class DatabaseConfigurator {
 
     public Properties getJpaProperties() {
         Properties properties = new Properties();
-//        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
 
         /* hibernate 5 uses sequences by default for auto generated keys
@@ -97,9 +90,6 @@ public class DatabaseConfigurator {
 
         properties.setProperty("hibernate.show_sql", "false");
         properties.setProperty("hibernate.format_sql", "false");
-
-//        properties.setProperty("hibernate.implicit_naming_strategy", );
-//        properties.setProperty("hibernate.physical_naming_strategy", );
 
         properties.setProperty("hibernate.generate_statistics", "false");
         properties.setProperty("hibernate.c3p0.min_size", "5");

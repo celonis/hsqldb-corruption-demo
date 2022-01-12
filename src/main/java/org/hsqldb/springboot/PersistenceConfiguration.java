@@ -17,7 +17,6 @@ public class PersistenceConfiguration {
         entityManagerFactory.setDataSource(databaseConfigurator.getDataSource());
         entityManagerFactory.setPackagesToScan("org.hsqldb.springboot");
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter(databaseConfigurator));
-        entityManagerFactory.setPersistenceUnitName("jpa.hsqldbcorruption");
         entityManagerFactory.setJpaProperties(databaseConfigurator.getJpaProperties());
         return entityManagerFactory;
     }
