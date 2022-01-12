@@ -14,21 +14,18 @@ public class DatabaseConfigurator {
     private final String dialect;
     private final String username;
     private final String password;
-    private final int checkoutTimeout;
 
     public DatabaseConfigurator(
         @Value("${database.driverClassName:}") String driverClassName,
         @Value("${database.url:}") String url,
         @Value("${database.dialect:}") String dialect,
         @Value("${database.username:}") String username,
-        @Value("${database.password:}") String password,
-        @Value("${database.checkoutTimeout:100000 }") int checkoutTimeout) {
+        @Value("${database.password:}") String password) {
         this.driverClassName = driverClassName;
         this.url = url;
         this.dialect = dialect;
         this.username = username;
         this.password = password;
-        this.checkoutTimeout = checkoutTimeout;
     }
 
     public String getDriverClassName() {
@@ -41,10 +38,6 @@ public class DatabaseConfigurator {
 
     public String getDialect() {
         return "org.hsqldb.springboot.HSQLDialect";
-    }
-
-    public int getCheckoutTimeout() {
-        return checkoutTimeout;
     }
 
     public String getUsername() {
@@ -87,9 +80,6 @@ public class DatabaseConfigurator {
         properties.setProperty("hibernate.cache.use_query_cache", "true");
         properties.setProperty("javax.persistence.sharedCache.mode", "ENABLE_SELECTIVE");
 
-        properties.setProperty("minPoolSize", "5");
-        properties.setProperty("maxPoolSize", "100");
-
         return properties;
     }
 
@@ -100,7 +90,6 @@ public class DatabaseConfigurator {
         dataSource.setJdbcUrl(getUrl());
         dataSource.setUser(getUsername());
         dataSource.setPassword(getPassword());
-        dataSource.setCheckoutTimeout(getCheckoutTimeout());
         return dataSource;
     }
 
