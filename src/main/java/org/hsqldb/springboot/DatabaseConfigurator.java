@@ -14,9 +14,6 @@ public class DatabaseConfigurator {
     private final String dialect;
     private final String username;
     private final String password;
-    private final int minPoolSize;
-    private final int maxPoolSize;
-    private final int maxIdle;
     private final int checkoutTimeout;
 
     public DatabaseConfigurator(
@@ -25,18 +22,12 @@ public class DatabaseConfigurator {
         @Value("${database.dialect:}") String dialect,
         @Value("${database.username:}") String username,
         @Value("${database.password:}") String password,
-        @Value("${database.minPoolSize:3}") int minPoolSize,
-        @Value("${database.maxPoolSize:100}") int maxPoolSize,
-        @Value("${database.maxIdle:300}") int maxIdle,
         @Value("${database.checkoutTimeout:100000 }") int checkoutTimeout) {
         this.driverClassName = driverClassName;
         this.url = url;
         this.dialect = dialect;
         this.username = username;
         this.password = password;
-        this.minPoolSize = minPoolSize;
-        this.maxPoolSize = maxPoolSize;
-        this.maxIdle = maxIdle;
         this.checkoutTimeout = checkoutTimeout;
     }
 
@@ -62,18 +53,6 @@ public class DatabaseConfigurator {
 
     public String getPassword() {
         return "password";
-    }
-
-    public int getMinPoolSize() {
-        return minPoolSize;
-    }
-
-    public int getMaxPoolSize() {
-        return maxPoolSize;
-    }
-
-    public int getMaxIdle() {
-        return maxIdle;
     }
 
     public Properties getJpaProperties() {
@@ -121,9 +100,6 @@ public class DatabaseConfigurator {
         dataSource.setJdbcUrl(getUrl());
         dataSource.setUser(getUsername());
         dataSource.setPassword(getPassword());
-        dataSource.setMaxIdleTime(getMaxIdle());
-        dataSource.setMaxPoolSize(getMaxPoolSize());
-        dataSource.setMinPoolSize(getMinPoolSize());
         dataSource.setCheckoutTimeout(getCheckoutTimeout());
         return dataSource;
     }
