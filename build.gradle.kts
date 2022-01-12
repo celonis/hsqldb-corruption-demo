@@ -20,7 +20,7 @@ dependencies {
 
     implementation("org.hsqldb:hsqldb:2.6.1:debug")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 }
 

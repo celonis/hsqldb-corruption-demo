@@ -14,6 +14,7 @@ public class EntityCorrupted {
     @GeneratedValue
     private Long id;
 
+    private Integer expectedLength;
 
     @Lob
     private String corruptedValue;
@@ -24,6 +25,14 @@ public class EntityCorrupted {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getExpectedLength() {
+        return expectedLength;
+    }
+
+    public void setExpectedLength(Integer expectedLength) {
+        this.expectedLength = expectedLength;
     }
 
     public String getCorruptedValue() {

@@ -1,25 +1,22 @@
 package org.hsqldb.springboot;
 
+import static java.lang.String.format;
 import static org.hsqldb.util.LobUtil.concatString;
 import static org.hsqldb.util.LobUtil.readExampleToString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@Component
-public class SpringDataFileWrite {
-
-    private final EntityCorruptedRepository repository;
+@SpringBootTest
+class DbCorruptionAppTest {
 
     @Autowired
-    public SpringDataFileWrite(EntityCorruptedRepository repository) {
-        this.repository = repository;
-    }
+    private EntityCorruptedRepository repository;
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void write() throws InterruptedException {
+    @Test
+    void testLobCorruption() throws InterruptedException {
         final var entity = new EntityCorrupted();
         final var originalValue = readExampleToString();
         entity.setCorruptedValue(originalValue);
@@ -43,21 +40,13 @@ public class SpringDataFileWrite {
             originalValue.length(), lastFetched.getExpectedLength(), lastFetched.getCorruptedValue().length(),
             lastFetched.getId(), concatString(lastFetched.getCorruptedValue()));
 
-        if (lastFetched.getCorruptedValue().length() != originalValue.length()) {
-            System.out.printf("%n!!!!!!%nERROR: original string length is %d, but fetched length is %d %n!!!!!!%n%n",
-                originalValue.length(), lastFetched.getCorruptedValue().length());
-        }
-    }
+        assertEquals(originalValue.length(), lastFetched.getCorruptedValue().length(),
+            () -> format("%n!!!!!!%nERROR: original string length is %d, but fetched length is %d %n!!!!!!%n%n",
+                originalValue.length(), lastFetched.getCorruptedValue().length()));
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void read() throws InterruptedException {
-//        System.out.printf("[%s] Reading%n", Thread.currentThread().getName());
-//        Thread.sleep(1000);
-//        final var lastSaved = repository.findTopByOrderByIdDesc();
-//        System.out.printf("[%s] Fetched last saved entity: realLength=%d, expectedLength=%d, id=%s, corruptedValue=%s%n",
-//            Thread.currentThread().getName(),
-//            lastSaved.getCorruptedValue().length(), lastSaved.getExpectedLength(),
-//            lastSaved.getId(),
-//            concatString(lastSaved.getCorruptedValue()));
-//    }
+//        if (lastFetched.getCorruptedValue().length() != originalValue.length()) {
+//            System.out.printf("%n!!!!!!%nERROR: original string length is %d, but fetched length is %d %n!!!!!!%n%n",
+//                originalValue.length(), lastFetched.getCorruptedValue().length());
+//        }
+    }
 }
