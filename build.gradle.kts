@@ -18,8 +18,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     implementation("org.hibernate:hibernate-core:$hibernateVersion")
-    implementation("org.hibernate:hibernate-c3p0:$hibernateVersion")
-    implementation("org.hibernate:hibernate-ehcache:$hibernateVersion")
 
     implementation("org.hsqldb:hsqldb:2.6.1:debug")
 
