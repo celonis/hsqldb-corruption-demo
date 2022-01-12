@@ -1,0 +1,31 @@
+name: HSQLDB corruption test
+
+on: [push]
+
+jobs:
+  run-corruption-test:
+    name: Run corruption test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: gradle
+
+      - name: Test Corruption in Gradle Build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test
+
+      - name: Cleanup Gradle Cache
+        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
+        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
