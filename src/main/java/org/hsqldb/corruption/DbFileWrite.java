@@ -1,10 +1,10 @@
 package org.hsqldb.corruption;
 
+import static org.hsqldb.util.LobUtil.concatString;
+import static org.hsqldb.util.LobUtil.readExampleToString;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 
 /**
@@ -19,10 +19,9 @@ public class DbFileWrite {
         DbUtil.update("SET AUTOCOMMIT TRUE");
 
         DbUtil.update("DROP TABLE IF EXISTS clob_corruption");
-        DbUtil.update("CREATE TABLE clob_corruption ( id INTEGER IDENTITY, value CLOB(1G))");
+        DbUtil.update("CREATE TABLE clob_corruption ( id BIGINT IDENTITY, value CLOB(1G))");
 
-        final var stringFromFile = Files.readString(Paths.get(DbFileWrite.class.getClassLoader().getResource("example.json").toURI()), StandardCharsets.UTF_8);
-        final var largeString = "begin__" + stringFromFile + "__end";
+        final var largeString = readExampleToString();
 
         for (int i = 0; i < 100; i++) {
             DbUtil.updateClob("INSERT INTO clob_corruption(value) VALUES( ? )", largeString);
@@ -34,8 +33,7 @@ public class DbFileWrite {
 
         final var result = DbUtil.query("SELECT value FROM clob_corruption", new StringExtractor("value"));
 
-        final var resultStringLength = result.length();
-        System.out.printf("Result length is %d. Read string is: %s...%s",
-            resultStringLength, result.substring(0, 20), result.substring(Math.max(0, resultStringLength - 20), resultStringLength));
+        System.out.printf("Result length is %d. Read string is: %s",
+            result.length(), concatString(result));
     }
 }

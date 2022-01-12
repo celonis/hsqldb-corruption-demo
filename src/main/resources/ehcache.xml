@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
+  monitoring="autodetect" dynamicConfig="true">
+
+
+  <defaultCache maxEntriesLocalHeap="50000" eternal="false"
+    timeToIdleSeconds="120" timeToLiveSeconds="120"
+    diskExpiryThreadIntervalSeconds="120"
+    memoryStoreEvictionPolicy="LRU" statistics="true"/>
+
+  <cache name="org.hibernate.cache.internal.StandardQueryCache"
+    maxEntriesLocalHeap="5000" eternal="false" timeToLiveSeconds="120"/>
+
+  <cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
+    maxEntriesLocalHeap="5000" eternal="false"/>
+
+  <cache name="org.hsqldb.springboot.EntityCorrupted" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"/>
+
+</ehcache>
