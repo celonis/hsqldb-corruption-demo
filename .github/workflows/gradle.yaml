@@ -21,7 +21,7 @@ jobs:
       - name: Test Corruption in Gradle Build
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: test
+          arguments: --no-daemon test
 
       - name: Cleanup Gradle Cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
