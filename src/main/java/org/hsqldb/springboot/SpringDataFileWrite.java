@@ -48,16 +48,4 @@ public class SpringDataFileWrite {
                 originalValue.length(), lastFetched.getCorruptedValue().length());
         }
     }
-
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void read() throws InterruptedException {
-//        System.out.printf("[%s] Reading%n", Thread.currentThread().getName());
-//        Thread.sleep(1000);
-//        final var lastSaved = repository.findTopByOrderByIdDesc();
-//        System.out.printf("[%s] Fetched last saved entity: realLength=%d, expectedLength=%d, id=%s, corruptedValue=%s%n",
-//            Thread.currentThread().getName(),
-//            lastSaved.getCorruptedValue().length(), lastSaved.getExpectedLength(),
-//            lastSaved.getId(),
-//            concatString(lastSaved.getCorruptedValue()));
-//    }
 }

@@ -16,18 +16,11 @@ val hibernateVersion = "5.5.8.Final";
 dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
     implementation("org.hibernate:hibernate-core:$hibernateVersion")
-
     implementation("org.hsqldb:hsqldb:2.6.1:debug")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
 }
-
-//application {
-//    mainClass.set("org.hsqldb.App")
-//}
 
 tasks.named<Test>("test") {
     useJUnitPlatform()

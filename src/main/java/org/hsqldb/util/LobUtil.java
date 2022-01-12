@@ -19,7 +19,7 @@ public final class LobUtil {
     }
 
     public static String readExampleToString() {
-        return "begin__" + readResourceToString("example.json") + "__end";
+        return "begin__" + readResourceToString("example.txt") + "__end";
     }
 
     public static String concatString(String str, int left, int right) {

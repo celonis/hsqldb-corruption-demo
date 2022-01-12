@@ -2,9 +2,9 @@ package org.hsqldb.springboot;
 
 import java.sql.Types;
 
-public class HSQLDialect extends org.hibernate.dialect.HSQLDialect {
+public class CustomHSQLDialect extends org.hibernate.dialect.HSQLDialect {
 
-    public HSQLDialect() {
+    public CustomHSQLDialect() {
         super();
         registerColumnType(Types.CLOB, "clob");
         registerColumnType(Types.BLOB, "blob");

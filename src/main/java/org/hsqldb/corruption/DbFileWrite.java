@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 /**
- * insert 100 times {@code example.json} content (&gt; 2MB)
+ * insert 100 times {@code example.txt} content (&gt; 2MB)
  */
 public class DbFileWrite {
 
