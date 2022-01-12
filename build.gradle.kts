@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL;
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*;
+
 plugins {
     application
     id("org.springframework.boot") version "2.5.6"
@@ -24,10 +27,24 @@ dependencies {
 
 }
 
-application {
-    mainClass.set("org.hsqldb.App")
-}
+//application {
+//    mainClass.set("org.hsqldb.App")
+//}
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
+
+    testLogging {
+        // set options for log level LIFECYCLE
+        events = setOf(PASSED, SKIPPED, FAILED)
+        displayGranularity = 2
+        exceptionFormat = FULL
+        showCauses = true
+        showExceptions = true
+        showStackTraces = true
+
+        maxGranularity = 3
+        minGranularity = 0
+    }
 }
+
