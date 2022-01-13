@@ -37,7 +37,7 @@ public class SpringDataFileWrite {
         Thread.sleep(sleepTime);
 
         System.out.printf("[%s] Reading%n", Thread.currentThread().getName());
-        final var lastFetched = repository.findTopByOrderByIdDesc();
+        final var lastFetched = repository.findById(saved.getId()).orElseThrow();
         System.out.printf("[%s] Fetched last saved entity: originalLength=%d, expectedLength=%d, savedLength=%d, id=%s, corruptedValue=%s%n",
             Thread.currentThread().getName(),
             originalValue.length(), lastFetched.getExpectedLength(), lastFetched.getCorruptedValue().length(),

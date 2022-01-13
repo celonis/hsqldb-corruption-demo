@@ -34,19 +34,14 @@ class DbCorruptionAppTest {
         Thread.sleep(sleepTime);
 
         System.out.printf("[%s] Reading%n", Thread.currentThread().getName());
-        final var lastFetched = repository.findTopByOrderByIdDesc();
+        final var fetched = repository.findById(saved.getId()).orElseThrow();
         System.out.printf("[%s] Fetched last saved entity: originalLength=%d, expectedLength=%d, savedLength=%d, id=%s, corruptedValue=%s%n",
             Thread.currentThread().getName(),
-            originalValue.length(), lastFetched.getExpectedLength(), lastFetched.getCorruptedValue().length(),
-            lastFetched.getId(), concatString(lastFetched.getCorruptedValue()));
+            originalValue.length(), fetched.getExpectedLength(), fetched.getCorruptedValue().length(),
+            fetched.getId(), concatString(fetched.getCorruptedValue()));
 
-        assertEquals(originalValue.length(), lastFetched.getCorruptedValue().length(),
+        assertEquals(originalValue.length(), fetched.getCorruptedValue().length(),
             () -> format("%n!!!!!!%nERROR: original string length is %d, but fetched length is %d %n!!!!!!%n%n",
-                originalValue.length(), lastFetched.getCorruptedValue().length()));
-
-//        if (lastFetched.getCorruptedValue().length() != originalValue.length()) {
-//            System.out.printf("%n!!!!!!%nERROR: original string length is %d, but fetched length is %d %n!!!!!!%n%n",
-//                originalValue.length(), lastFetched.getCorruptedValue().length());
-//        }
+                originalValue.length(), fetched.getCorruptedValue().length()));
     }
 }
