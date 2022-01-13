@@ -1,10 +1,12 @@
-package org.hsqldb.springboot;
+package org.hsqldb.corrupted;
 
 import static java.lang.String.format;
 import static org.hsqldb.util.LobUtil.concatString;
 import static org.hsqldb.util.LobUtil.readExampleToString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.hsqldb.corrupted.model.EntityCorrupted;
+import org.hsqldb.corrupted.model.EntityCorruptedRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,8 +1,10 @@
-package org.hsqldb.springboot;
+package org.hsqldb.corrupted;
 
 import static org.hsqldb.util.LobUtil.concatString;
 import static org.hsqldb.util.LobUtil.readExampleToString;
 
+import org.hsqldb.corrupted.model.EntityCorrupted;
+import org.hsqldb.corrupted.model.EntityCorruptedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;

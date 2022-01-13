@@ -1,4 +1,4 @@
-package org.hsqldb.springboot;
+package org.hsqldb.corrupted.model;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;

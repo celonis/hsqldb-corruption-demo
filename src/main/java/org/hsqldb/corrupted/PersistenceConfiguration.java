@@ -1,4 +1,4 @@
-package org.hsqldb.springboot;
+package org.hsqldb.corrupted;
 
 import java.util.Map;
 import javax.sql.DataSource;
@@ -11,7 +11,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Configuration
 public class PersistenceConfiguration {
 
-    public static final String DB_FILE = "test-corruption-springboot/db_file";
+    public static final String DB_FILE = "test-corruption/db_file";
     public static final String CRYPT_CONFIG = ";crypt_key=11111111111111111111111111111111;crypt_type=blowfish;crypt_lobs=true";
 
     private DataSource getDataSource() {
@@ -29,7 +29,7 @@ public class PersistenceConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(getDataSource());
-        entityManagerFactory.setPackagesToScan("org.hsqldb.springboot");
+        entityManagerFactory.setPackagesToScan(DbCorruptionApp.class.getPackageName());
         entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         entityManagerFactory.setJpaPropertyMap(Map.of("hibernate.hbm2ddl.auto", "create"));
