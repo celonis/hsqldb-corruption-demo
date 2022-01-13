@@ -4,14 +4,18 @@ import static java.lang.String.format;
 import static org.hsqldb.util.LobUtil.concatString;
 import static org.hsqldb.util.LobUtil.generateString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
 
+import org.hsqldb.corrupted.DbCorruptionAppTest.DbCorruptionAppTestConfig;
 import org.hsqldb.corrupted.model.EntityCorrupted;
 import org.hsqldb.corrupted.model.EntityCorruptedRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 
-@SpringBootTest
+@SpringBootTest(classes = DbCorruptionAppTestConfig.class)
 class DbCorruptionAppTest {
 
     @Autowired
@@ -48,5 +52,14 @@ class DbCorruptionAppTest {
         assertEquals(originalValue.length(), fetched.getCorruptedValue().length(),
             () -> format("%n!!!!!!%nERROR: original string length is %d, but fetched length is %d %n!!!!!!%n%n",
                 originalValue.length(), fetched.getCorruptedValue().length()));
+    }
+
+    /**
+     * Exclude {@link CorruptedDataSavedExample} from the test context configuration. Include only persistence config.
+     */
+    @ComponentScan(basePackageClasses = DbCorruptionApp.class,
+        excludeFilters = @Filter(type = ASSIGNABLE_TYPE, classes = CorruptedDataSavedExample.class))
+    static class DbCorruptionAppTestConfig {
+
     }
 }
