@@ -11,8 +11,13 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Configuration
 public class PersistenceConfiguration {
 
-    public static final String DB_FILE = "test-corruption/db_file";
+    /**
+     * This configuration exactly creates the problem: when enabled, it's not possible
+     * to save CLOB more than 512 KiB!
+     */
     public static final String CRYPT_CONFIG = ";crypt_key=11111111111111111111111111111111;crypt_type=blowfish;crypt_lobs=true";
+
+    public static final String DB_FILE = "test-corruption/db_file";
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
