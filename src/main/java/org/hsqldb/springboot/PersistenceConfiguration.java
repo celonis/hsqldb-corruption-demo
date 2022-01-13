@@ -35,7 +35,7 @@ public class PersistenceConfiguration {
         entityManagerFactory.setPackagesToScan("org.hsqldb.springboot");
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());
 
-        entityManagerFactory.setJpaPropertyMap(Map.of("hibernate.hbm2ddl.auto", "update"));
+        entityManagerFactory.setJpaPropertyMap(Map.of("hibernate.hbm2ddl.auto", "create"));
 
         return entityManagerFactory;
     }
@@ -43,7 +43,7 @@ public class PersistenceConfiguration {
     private JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setGenerateDdl(true);
-        jpaVendorAdapter.setDatabasePlatform(HSQL_DIALECT);
+//        jpaVendorAdapter.setDatabasePlatform(HSQL_DIALECT);
         return jpaVendorAdapter;
     }
 

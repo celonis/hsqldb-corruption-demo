@@ -18,6 +18,7 @@ public class EntityCorrupted {
     private Integer expectedLength;
 
     @Lob
+    @Column(length = 1024 * 1024 * 1024)
     private String corruptedValue;
 
     public Long getId() {

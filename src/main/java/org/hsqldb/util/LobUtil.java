@@ -6,13 +6,12 @@ import static java.lang.Math.min;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import org.hsqldb.corruption.DbFileWrite;
 
 public final class LobUtil {
 
     public static String readResourceToString(String resourceName) {
         try {
-            return Files.readString(Paths.get(DbFileWrite.class.getClassLoader().getResource(resourceName).toURI()), StandardCharsets.UTF_8);
+            return Files.readString(Paths.get(LobUtil.class.getClassLoader().getResource(resourceName).toURI()), StandardCharsets.UTF_8);
         } catch (final Exception e) {
             throw new IllegalStateException("Can't read resource \"" + resourceName + "\":", e);
         }
