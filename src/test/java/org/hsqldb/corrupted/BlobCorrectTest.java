@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.hsqldb.corrupted.model.BlobCorrect;
 import org.hsqldb.corrupted.model.BlobCorrectRepository;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ class BlobCorrectTest {
         512 * 1024, // 512 KiB
         1024 * 1024 // 1 MiB
     })
-    void testBlob_whenEncryptedAnd1MiB_savesCorrect(int blobLength) throws InterruptedException {
+    void testBlob(int blobLength) throws InterruptedException {
         final var entity = new BlobCorrect();
         final var originalValue = generateBlob(blobLength); // 1MiB
         entity.setBlobValue(originalValue);

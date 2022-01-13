@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.hsqldb.corrupted.model.ClobCorrupted;
 import org.hsqldb.corrupted.model.ClobCorruptedRepository;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +18,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = DbCorruptionAppTestConfig.class)
 class ClobCorruptionTest {
 
+    @Autowired
+    private ClobCorruptedRepository repository;
+
     @ParameterizedTest
     @ValueSource(ints = {
         512 * 1024, // 512 KiB - success
         1024 * 1024, // 1MiB - fails
     })
-    void testClob_whenEncryptedAnd1MiB_savesCorruptedString(int stringLength) throws InterruptedException {
+    void testClob(int stringLength) throws InterruptedException {
         final var entity = new ClobCorrupted();
         final var originalValue = generateString(stringLength);
         entity.setCorruptedValue(originalValue);
@@ -53,6 +55,4 @@ class ClobCorruptionTest {
                 originalValue.length(), fetched.getCorruptedValue().length()));
     }
 
-    @Autowired
-    private ClobCorruptedRepository repository;
 }
