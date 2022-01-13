@@ -9,12 +9,12 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringDataFileWrite {
+public class SpringDataSave {
 
     private final EntityCorruptedRepository repository;
 
     @Autowired
-    public SpringDataFileWrite(EntityCorruptedRepository repository) {
+    public SpringDataSave(EntityCorruptedRepository repository) {
         this.repository = repository;
     }
 
