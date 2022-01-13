@@ -25,7 +25,7 @@ tasks.named<Test>("test") {
 
     testLogging {
         // set options for log level LIFECYCLE
-        events = setOf(PASSED, SKIPPED, FAILED)
+        events = setOf(PASSED, SKIPPED, FAILED, STANDARD_OUT, STANDARD_ERROR)
         displayGranularity = 2
         exceptionFormat = FULL
         showCauses = true
