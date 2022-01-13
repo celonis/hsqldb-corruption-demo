@@ -9,18 +9,22 @@ import java.nio.file.Paths;
 
 public final class LobUtil {
 
-    public static String readResourceToString(String resourceName) {
-        try {
-            return Files.readString(Paths.get(LobUtil.class.getClassLoader().getResource(resourceName).toURI()), StandardCharsets.UTF_8);
-        } catch (final Exception e) {
-            throw new IllegalStateException("Can't read resource \"" + resourceName + "\":", e);
+    public static String generateString(final int length) {
+        final var res = new char[length];
+        char c = 'a';
+        for (int i = 0; i < length; i++) {
+            res[i] = c++;
+            if (c >= 'z') {
+                c = 'a';
+            }
         }
+
+        return new String(res);
     }
 
-    public static String readExampleToString() {
-        return "begin__" + readResourceToString("example.txt") + "__end";
-    }
-
+    /**
+     * Cut middle of the string.
+     */
     public static String concatString(String str, int left, int right) {
         final var len = str.length();
         final var leftChars = min(max(0, left), len);

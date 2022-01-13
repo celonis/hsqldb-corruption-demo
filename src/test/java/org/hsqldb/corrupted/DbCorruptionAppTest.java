@@ -2,7 +2,7 @@ package org.hsqldb.corrupted;
 
 import static java.lang.String.format;
 import static org.hsqldb.util.LobUtil.concatString;
-import static org.hsqldb.util.LobUtil.readExampleToString;
+import static org.hsqldb.util.LobUtil.generateString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.hsqldb.corrupted.model.EntityCorrupted;
@@ -17,10 +17,13 @@ class DbCorruptionAppTest {
     @Autowired
     private EntityCorruptedRepository repository;
 
+    /**
+     * @see CorruptedDataSavedExample
+     */
     @Test
     void testLobCorruption() throws InterruptedException {
         final var entity = new EntityCorrupted();
-        final var originalValue = readExampleToString();
+        final var originalValue = generateString(1024 * 1024); // 1MiB
         entity.setCorruptedValue(originalValue);
         entity.setExpectedLength(originalValue.length());
 

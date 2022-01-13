@@ -1,7 +1,7 @@
 package org.hsqldb.corrupted;
 
 import static org.hsqldb.util.LobUtil.concatString;
-import static org.hsqldb.util.LobUtil.readExampleToString;
+import static org.hsqldb.util.LobUtil.generateString;
 
 import org.hsqldb.corrupted.model.EntityCorrupted;
 import org.hsqldb.corrupted.model.EntityCorruptedRepository;
@@ -11,19 +11,23 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringDataSave {
+public class CorruptedDataSavedExample {
 
     private final EntityCorruptedRepository repository;
 
     @Autowired
-    public SpringDataSave(EntityCorruptedRepository repository) {
+    public CorruptedDataSavedExample(EntityCorruptedRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * Just an ad-hoc example to test in spring boot
+     * @throws InterruptedException
+     */
     @EventListener(ApplicationReadyEvent.class)
     public void write() throws InterruptedException {
         final var entity = new EntityCorrupted();
-        final var originalValue = readExampleToString();
+        final var originalValue = generateString(0x100000); // 1MiB
         entity.setCorruptedValue(originalValue);
         entity.setExpectedLength(originalValue.length());
 
