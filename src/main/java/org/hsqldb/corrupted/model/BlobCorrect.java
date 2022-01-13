@@ -9,7 +9,7 @@ import javax.persistence.Lob;
 
 @Entity
 @Cacheable
-public class EntityCorrupted {
+public class BlobCorrect {
 
     @Id
     @GeneratedValue
@@ -18,8 +18,8 @@ public class EntityCorrupted {
     private Integer expectedLength;
 
     @Lob
-    @Column(length = 1024 * 1024 * 1024)
-    private String corruptedValue;
+    @Column(length = 1024 * 1024 * 1024) // 1GiB
+    private byte[] blobValue;
 
     public Long getId() {
         return id;
@@ -37,11 +37,11 @@ public class EntityCorrupted {
         this.expectedLength = expectedLength;
     }
 
-    public String getCorruptedValue() {
-        return corruptedValue;
+    public byte[] getBlobValue() {
+        return blobValue;
     }
 
-    public void setCorruptedValue(String corruptedValue) {
-        this.corruptedValue = corruptedValue;
+    public void setBlobValue(byte[] blobValue) {
+        this.blobValue = blobValue;
     }
 }

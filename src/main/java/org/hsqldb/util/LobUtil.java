@@ -22,6 +22,16 @@ public final class LobUtil {
         return new String(res);
     }
 
+    public static byte[] generateBlob(final int length) {
+        final var res = new byte[length];
+        byte b = 0;
+        for (int i = 0; i < length; i++) {
+            res[i] = b++;
+        }
+
+        return res;
+    }
+
     /**
      * Cut middle of the string.
      */

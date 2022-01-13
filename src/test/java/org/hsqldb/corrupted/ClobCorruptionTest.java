@@ -4,30 +4,29 @@ import static java.lang.String.format;
 import static org.hsqldb.util.LobUtil.concatString;
 import static org.hsqldb.util.LobUtil.generateString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
 
-import org.hsqldb.corrupted.DbCorruptionAppTest.DbCorruptionAppTestConfig;
-import org.hsqldb.corrupted.model.EntityCorrupted;
-import org.hsqldb.corrupted.model.EntityCorruptedRepository;
+import org.hsqldb.corrupted.model.ClobCorrupted;
+import org.hsqldb.corrupted.model.ClobCorruptedRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScan.Filter;
 
+/**
+ * @see CorruptedDataSavedExample
+ */
 @SpringBootTest(classes = DbCorruptionAppTestConfig.class)
-class DbCorruptionAppTest {
+class ClobCorruptionTest {
 
-    @Autowired
-    private EntityCorruptedRepository repository;
-
-    /**
-     * @see CorruptedDataSavedExample
-     */
-    @Test
-    void testLobCorruption() throws InterruptedException {
-        final var entity = new EntityCorrupted();
-        final var originalValue = generateString(1024 * 1024); // 1MiB
+    @ParameterizedTest
+    @ValueSource(ints = {
+        512 * 1024, // 512 KiB - success
+        1024 * 1024, // 1MiB - fails
+    })
+    void testClob_whenEncryptedAnd1MiB_savesCorruptedString(int stringLength) throws InterruptedException {
+        final var entity = new ClobCorrupted();
+        final var originalValue = generateString(stringLength);
         entity.setCorruptedValue(originalValue);
         entity.setExpectedLength(originalValue.length());
 
@@ -54,12 +53,6 @@ class DbCorruptionAppTest {
                 originalValue.length(), fetched.getCorruptedValue().length()));
     }
 
-    /**
-     * Exclude {@link CorruptedDataSavedExample} from the test context configuration. Include only persistence config.
-     */
-    @ComponentScan(basePackageClasses = DbCorruptionApp.class,
-        excludeFilters = @Filter(type = ASSIGNABLE_TYPE, classes = CorruptedDataSavedExample.class))
-    static class DbCorruptionAppTestConfig {
-
-    }
+    @Autowired
+    private ClobCorruptedRepository repository;
 }
