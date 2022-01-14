@@ -1,5 +1,8 @@
 # HSQLDB 2.16.0 CLOB corruption bug demo
 
+See the reported bug 
+[**CLOB value saved truncated when encryption is used**](https://sourceforge.net/p/hsqldb/bugs/1645/)
+
 After upgrading to 2.16 we faced the issue that `CLOB` fields are saved corrupted (truncated) when flushed/persisted to the file.
 
 **Environment:**
